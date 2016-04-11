@@ -6,11 +6,33 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.*;
 public class Game_bean_machine extends Application{
 	@Override
 	public void start(Stage primaryStage){
 		Pane pane=new Pane();
-
+		Paint[] color = {Color.RED,Color.GREEN,Color.PINK,Color.BROWN,Color.CYAN,
+				Color.ORANGE,Color.GRAY,Color.BLUE,Color.YELLOW}; 
+		Circle[] circles = new Circle[28];
+		
+		for(int i =0,index=0;i<7;i++){
+			int startX = 280-i*20;
+			int y = (int) (40+20*i);
+			for(int z = 0;z<i+1;z++){
+				circles[index++] = new Circle(startX+40*z,y,5,Color.BLACK);
+			}
+		}
+		pane.setOnMouseClicked(e -> {
+			Bean_Play ball = new Bean_Play(275,50,5,(Paint)color[(int)(Math.random()*9)]);
+			pane.getChildren().add(ball);
+			ball.startMoveBall(7);
+		});
+		
+		for(int i =0;i<28;i++){
+			pane.getChildren().addAll(circles[i]);
+			
+		}
 		
 		pane.getChildren().add(new Ellipse(280,40,5,5));
 		
@@ -75,5 +97,8 @@ public class Game_bean_machine extends Application{
 		primaryStage.setScene(scene1);
 		primaryStage.show();
 		
+	}
+	public static void main(String[] args){
+		launch(args);
 	}
 }
